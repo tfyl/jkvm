@@ -7,7 +7,7 @@ toolchain go1.26.10
 require (
 	github.com/coder/websocket v1.8.15
 	github.com/pion/rtcp v1.2.19
-	github.com/pion/rtp v1.10.5
+	github.com/pion/rtp v1.10.6
 	github.com/pion/webrtc/v4 v4.2.24
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/pflag v1.0.9
