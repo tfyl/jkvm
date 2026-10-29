@@ -1,0 +1,10 @@
+/bin/
+/dist/
+*.test
+*.out
+*.png
+recon/
+shots/
+.claude/
+/completions/
+/e2e-out/

@@ -1,0 +1,33 @@
+version: 2
+
+project_name: jkvm
+
+before:
+  hooks:
+    - go mod download
+    - make completions
+
+builds:
+  - main: ./cmd/jkvm
+    binary: jkvm
+    env: [CGO_ENABLED=0]
+    goos: [linux, darwin]
+    goarch: [amd64, arm64, arm]
+    goarm: ["7"]
+    ignore:
+      - goos: darwin
+        goarch: arm
+    flags: [-trimpath]
+    ldflags: ["-s -w -X main.version={{.Version}}"]
+
+archives:
+  - formats: [tar.gz]
+    files:
+      - README.md
+      - PROTOCOL.md
+      - LICENSE
+      - CHANGELOG.md
+      - completions/*
+
+checksum:
+  name_template: checksums.txt
