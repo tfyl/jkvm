@@ -20,6 +20,7 @@ import (
 const (
 	LayoutUS = "en-US"
 	LayoutUK = "en-UK"
+	LayoutDK = "da-DK"
 )
 
 // hidrpc message types (internal/hidrpc/hidrpc.go).
@@ -33,7 +34,7 @@ const (
 
 // TypeOptions controls Type.
 type TypeOptions struct {
-	Layout string // "" = ask the device (getKeyboardLayout), else LayoutUS/LayoutUK
+	Layout string // "" = ask the device (getKeyboardLayout), else LayoutUS/LayoutUK/LayoutDK
 	// Delay between characters; 0 = sensible default.
 	DelayMS int
 }
@@ -100,6 +101,12 @@ func Type(ctx context.Context, d kvm.Device, text string, opt TypeOptions) error
 		steps = append(steps,
 			macroStep{mod: s.mod, keys: []byte{s.key}, delay: 20},
 			macroStep{delay: uint16(delay)})
+		if deadKeys[layout][r] {
+			// A dead key only produces its character when followed by space.
+			steps = append(steps,
+				macroStep{keys: []byte{kSpace}, delay: 20},
+				macroStep{delay: uint16(delay)})
+		}
 	}
 	if len(bad) > 0 {
 		return &UntypableError{Layout: layout, Chars: bad}

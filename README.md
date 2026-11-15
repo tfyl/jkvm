@@ -138,7 +138,7 @@ A USB keyboard sends key positions, and the target's operating system decides wh
 produces. jkvm needs to know that layout to type symbols correctly. `type` and character keys in `key` use
 `--layout`, else `$JKVM_LAYOUT`, else the layout stored on the device (`getKeyboardLayout`).
 
-Supported: `en-US` and `en-UK` (also `us`, `uk`, `gb`, `en-GB`), with tables taken from the firmware's UI.
+Supported: `en-US`, `en-UK` and `da-DK` (also `us`, `uk`, `gb`, `en-GB`, `da`, `dk`), with tables taken from the firmware's UI. On `da-DK`, `~`, `^`, `¨`, `´` and ``` ` ``` are dead keys: `type` sends the key followed by a space.
 If symbols come out wrong (for example `"` and `@` swapped), the layout doesn't match the target's.
 
 ### Mouse
@@ -207,7 +207,7 @@ video stream, which makes the device report video state changes.
   needs 0.5.9 or later.
 - Running jkvm disconnects anyone using the web UI at that moment, and the other way round.
 - Some BIOSes and boot loaders ignore the absolute mouse. Drive them with `key`.
-- Only `en-US` and `en-UK` layouts are built in.
+- Only `en-US`, `en-UK` and `da-DK` layouts are built in.
 - Linux and macOS only: the per-device lock uses `flock`.
 - The video track is H.264 only (jkvm doesn't offer H.265), decoded by the system `ffmpeg`.
 

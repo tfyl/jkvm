@@ -23,6 +23,15 @@ func TestLayouts(t *testing.T) {
 		{LayoutUS, '9', stroke{0x26, 0}},
 		{LayoutUS, '2', stroke{0x1f, 0}},
 		{LayoutUS, '\n', stroke{0x28, 0}},
+		{LayoutDK, '/', stroke{kDigit7, ModShift}},
+		{LayoutDK, '-', stroke{kSlash, 0}},
+		{LayoutDK, '|', stroke{kEqual, ModAltGr}},
+		{LayoutDK, '\\', stroke{kIntlBackslash, ModAltGr}},
+		{LayoutDK, '~', stroke{kBracketRight, ModAltGr}},
+		{LayoutDK, '@', stroke{kDigit2, ModAltGr}},
+		{LayoutDK, 'æ', stroke{kSemicolon, 0}},
+		{LayoutDK, 'ø', stroke{kQuote, 0}},
+		{LayoutDK, 'Å', stroke{kBracketLeft, ModShift}},
 	}
 	for _, c := range cases {
 		if got := layouts[c.layout][c.r]; got != c.want {

@@ -93,6 +93,7 @@ func TestNormalizeLayout(t *testing.T) {
 	for in, want := range map[string]string{
 		"en-US": LayoutUS, "us": LayoutUS, "EN_us": LayoutUS,
 		"en-UK": LayoutUK, "en-GB": LayoutUK, "en_GB": LayoutUK, "uk": LayoutUK, "gb": LayoutUK,
+		"da-DK": LayoutDK, "da_dk": LayoutDK, "da": LayoutDK, "dk": LayoutDK,
 	} {
 		if got, err := normalizeLayout(in); err != nil || got != want {
 			t.Errorf("normalizeLayout(%q) = %q, %v; want %q", in, got, err, want)
@@ -118,5 +119,17 @@ func TestLayoutsCoverPrintableASCII(t *testing.T) {
 			}
 			seen[s] = r
 		}
+	}
+}
+
+func TestTypeDeadKeyAddsSpace(t *testing.T) {
+	d := kvmtest.New(map[string]string{"getKeyboardLayout": `"da-DK"`})
+	d.OnHID = ackMacros
+	// '~' is a dead key on da-DK: press, release, then space, release.
+	if err := Type(context.Background(), d, "~a", TypeOptions{}); err != nil {
+		t.Fatal(err)
+	}
+	if got := countSteps(d.Sent()[0]); got != 6 {
+		t.Errorf("%d steps, want 6 (dead key + space + a)", got)
 	}
 }

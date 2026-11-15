@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- `type` and `key`: `da-DK` layout (also `da`, `dk`). The dead keys `~ ^ ¨ ´ `` ` are followed by a space so
+  they produce the character itself.
+
 ## 0.1.0 (2026-10-29)
 
 First public release.

@@ -138,7 +138,7 @@ backslashes stay as they are, so C:\Users types as written.`,
 		}),
 	}
 	f := cmd.Flags()
-	f.StringVarP(&layout, "layout", "l", os.Getenv("JKVM_LAYOUT"), "en-US or en-UK (default: device setting; env JKVM_LAYOUT)")
+	f.StringVarP(&layout, "layout", "l", os.Getenv("JKVM_LAYOUT"), "en-US, en-UK or da-DK (default: device setting; env JKVM_LAYOUT)")
 	f.IntVarP(&delay, "delay", "d", 0, "ms between characters (default 20)")
 	f.BoolVarP(&escapes, "escapes", "e", false, `expand \n (Enter), \t (Tab) and \\ in the text`)
 	return cmd
