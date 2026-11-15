@@ -81,6 +81,41 @@ var layouts = map[string]map[rune]stroke{
 		'`': {kBackquote, 0}, '¬': {kBackquote, ModShift},
 		'\\': {kIntlBackslash, 0}, '|': {kIntlBackslash, ModShift},
 	}),
+	// Danish (Linux "dk", Windows "Danish"). Based on the firmware's
+	// da_DK.ts, with three fixes checked on a Linux console with the dk
+	// keymap: '\\' is AltGr+< (the firmware sends the acute key), '|'
+	// (AltGr+acute key) is not a dead key, and Æ is the key right of L with
+	// Ø after it (the firmware has them swapped).
+	LayoutDK: buildLayout(map[rune]stroke{
+		'½': {kBackquote, 0}, '§': {kBackquote, ModShift},
+		'!': {kDigit1, ModShift}, '"': {kDigit2, ModShift}, '@': {kDigit2, ModAltGr},
+		'#': {kDigit3, ModShift}, '£': {kDigit3, ModAltGr},
+		'¤': {kDigit4, ModShift}, '$': {kDigit4, ModAltGr},
+		'%': {kDigit5, ModShift}, '&': {kDigit6, ModShift},
+		'/': {kDigit7, ModShift}, '{': {kDigit7, ModAltGr},
+		'(': {kDigit8, ModShift}, '[': {kDigit8, ModAltGr},
+		')': {kDigit9, ModShift}, ']': {kDigit9, ModAltGr},
+		'=': {kDigit0, ModShift}, '}': {kDigit0, ModAltGr},
+		'+': {kMinus, 0}, '?': {kMinus, ModShift},
+		'´': {kEqual, 0}, '`': {kEqual, ModShift}, '|': {kEqual, ModAltGr},
+		'å': {kBracketLeft, 0}, 'Å': {kBracketLeft, ModShift},
+		'¨': {kBracketRight, 0}, '^': {kBracketRight, ModShift},
+		'~': {kBracketRight, ModAltGr},
+		'æ': {kSemicolon, 0}, 'Æ': {kSemicolon, ModShift},
+		'ø': {kQuote, 0}, 'Ø': {kQuote, ModShift},
+		'\'': {kBackslash, 0}, '*': {kBackslash, ModShift},
+		',': {kComma, 0}, ';': {kComma, ModShift},
+		'.': {kPeriod, 0}, ':': {kPeriod, ModShift},
+		'-': {kSlash, 0}, '_': {kSlash, ModShift},
+		'<': {kIntlBackslash, 0}, '>': {kIntlBackslash, ModShift}, '\\': {kIntlBackslash, ModAltGr},
+		'€': {0x08, ModAltGr}, // AltGr+E
+	}),
+}
+
+// deadKeys lists, per layout, the characters typed with a dead key: the
+// key only produces the character when followed by a space.
+var deadKeys = map[string]map[rune]bool{
+	LayoutDK: {'´': true, '`': true, '¨': true, '^': true, '~': true},
 }
 
 // buildLayout adds the keys every Latin layout here shares.
@@ -116,8 +151,10 @@ func normalizeLayout(name string) (string, error) {
 		return LayoutUS, nil
 	case "en-uk", "en-gb", "uk", "gb":
 		return LayoutUK, nil
+	case "da-dk", "da", "dk":
+		return LayoutDK, nil
 	}
-	return "", fmt.Errorf("unsupported keyboard layout %q (supported: en-US, en-UK)", name)
+	return "", fmt.Errorf("unsupported keyboard layout %q (supported: en-US, en-UK, da-DK)", name)
 }
 
 // namedKeys are layout-independent keys addressable in combos. Names are

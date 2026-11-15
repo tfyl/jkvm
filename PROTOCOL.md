@@ -228,3 +228,16 @@ en-UK differs from en-US in these keys:
 | `£` | – | Shift+3 |
 | `€` | – | AltGr+4 |
 | `¬` | – | Shift+Backquote |
+
+da-DK follows `da_DK.ts` (checked against firmware 0.5.10 and a Linux text console with the `dk` keymap),
+except for three entries where the firmware table doesn't match the layout
+([jetkvm/kvm#1771](https://github.com/jetkvm/kvm/issues/1771)):
+
+| char | firmware da_DK.ts | da-DK in jkvm |
+|---|---|---|
+| `\` | Equal (the acute dead key) | AltGr+IntlBackslash |
+| `\|` | AltGr+Equal, dead key | AltGr+Equal, not dead |
+| `æ` / `ø` | Quote / Semicolon | Semicolon / Quote |
+
+`~`, `^`, `¨`, `´` and `` ` `` are dead keys on da-DK; like the UI's paste, `type` sends a space after them. On the
+Linux console `´` and `¨` followed by a space come out as `'` and `"`.
